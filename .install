@@ -1,7 +1,7 @@
 import os
 import re
 
-path = 'export PATH="$PATH:"/usr/bin/burr-main/""'
+path = 'export PATH="$PATH:"/usr/bin/burr/""'
 pattern = re.compile(path)
 
 folder_dir = os.path.expanduser('~')
