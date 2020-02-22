@@ -1,15 +1,31 @@
+#!/usr/bin/env python3
 import os
 import re
+import sys 
 
-path = 'export PATH="$PATH:"/usr/bin/burr/""'
-pattern = re.compile(path)
+path_Unix = 'export PATH="$PATH:"/usr/bin/burr/src/""'
+path_MacOS = 'export PATH="$PATH:"/usr/local/bin/burr/src/""'
 
-folder_dir = os.path.expanduser('~')
-bashrc = os.path.abspath('%s/.bashrc' %folder_dir)
-zshrc = os.path.abspath('%s/.zshrc' %folder_dir)
+dir = { -1 : path_MacOS, 0 : path_Unix }
 
 
-def add_rc(filerc):
+def path_select():
+    if len(sys.argv)== 2:
+      try:
+        alias_path = dir[sys.argv[1]]
+      except:
+        alias_path = dir[0]
+
+      pattern = re.compile(alias_path)
+      folder_dir = os.path.expanduser('~')
+      bashrc = os.path.abspath('%s/.bashrc' %folder_dir)
+      zshrc = os.path.abspath('%s/.zshrc' %folder_dir)
+
+      add_rc(bashrc,alias_path)
+      add_rc(zshrc,alias_path) 
+
+
+def add_rc(filerc, path):
     try:
       with open(filerc, 'r') as f:
         lines = f.readlines()
@@ -23,7 +39,6 @@ def add_rc(filerc):
       pass 
 
 if __name__ == "__main__":
-    add_rc(bashrc)
-    add_rc(zshrc)  
+    path_select()    
     print("Done.")
 
