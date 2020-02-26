@@ -1,41 +1,48 @@
 #!/usr/bin/env python3
 import os
 import re
-import sys 
+import sys
+import gc
 
-path_Unix = 'export PATH="$PATH:"/usr/bin/burr/src/""'
-path_MacOS = 'export PATH="$PATH:"/usr/local/bin/burr/src/""'
+path_Unix = 'export PATH="$PATH:"/usr/bin/burr/src/""\n'
+path_MacOS = 'export PATH="$PATH:"/usr/local/bin/burr/src/""\n'
 
-dir = { -1 : path_MacOS, 0 : path_Unix }
+dir = { 'm' : path_MacOS, 'l' : path_Unix }
 
 
 def path_select():
     if len(sys.argv)== 2:
-      try:
+      try:  
         alias_path = dir[sys.argv[1]]
-      except:
-        alias_path = dir[0]
+      	
+        #print(alias_path) 
+        folder_dir = os.path.expanduser('~')
+        bashrc = os.path.abspath('%s/.bashrc' %folder_dir)
+        zshrc = os.path.abspath('%s/.zshrc' %folder_dir)
 
-      pattern = re.compile(alias_path)
-      folder_dir = os.path.expanduser('~')
-      bashrc = os.path.abspath('%s/.bashrc' %folder_dir)
-      zshrc = os.path.abspath('%s/.zshrc' %folder_dir)
-
-      add_rc(bashrc,alias_path)
-      add_rc(zshrc,alias_path) 
-
+        add_rc(bashrc,alias_path)
+        add_rc(zshrc,alias_path)
+        
+        del alias_path
+        gc.collect() 
+      except Exception as err:
+        print(err)
+        pass 
 
 def add_rc(filerc, path):
     try:
       with open(filerc, 'r') as f:
         lines = f.readlines()
         for line in lines:
-          if pattern.match(line):
+          if path == line :
+            #print("Already exists at",filerc)  
             return
-        out = open(filerc, 'a')
-        out.write('\n%s\n' %path)
-        out.close()
-    except:
+      out = open(filerc, 'a')
+      out.write('%s' %path)
+      out.close()
+
+    except Exception as err:
+      print(err)
       pass 
 
 if __name__ == "__main__":

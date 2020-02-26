@@ -10,10 +10,16 @@ if [[ `uname` == "Darwin" ]]; then
     brew install python3
     brew install git
     sudo chmod 777 /usr/local/bin/
-    git -C /usr/local/bin/ clone https://gitlab.com/awesome-dev/burr.git 
+    if [[ -d /usr/local/bin/burr ]];
+    then
+    	sudo rm -r /usr/local/bin/burr/ 
+    fi
+    git -C /usr/local/bin/ clone https://gitlab.com/awesome-dev/burr.git
+    
     sudo chmod 777 /usr/local/bin/burr ;
+    sudo chmod 777 /usr/local/bin/burr/src ;
     sudo chmod 777 /usr/local/bin/burr/src/burr ;  
-    python3  ./.install -1
+    python3  ./.install m
 fi 
 
 
@@ -25,7 +31,7 @@ sudo apt-get install -y python3
 sudo apt-get install -y git
 sudo apt-get update
 sudo mkdir /usr/bin/burr; sudo chmod 777 /usr/bin/burr ; sudo cd  /usr/bin/burr ; sudo git -C /usr/bin/ clone https://gitlab.com/awesome-dev/burr.git 
-python3  ./.install 0
+python3  ./.install l
 fi
 
 
