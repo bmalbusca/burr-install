@@ -9,6 +9,7 @@ if [[ `uname` == "Darwin" ]]; then
     command -v brew >/dev/null 2>&1 || { echo >&2 "Installing Homebrew Now"; \ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"; }
     brew install python3
     brew install git
+    pip3 install objcrypt
     sudo chmod 777 /usr/local/bin/
     if [[ -d /usr/local/bin/burr ]];
     then
@@ -29,6 +30,7 @@ echo Linux installation
 sudo apt-get update
 sudo apt-get install -y python3
 sudo apt-get install -y git
+sudo apt-get -y install python3-pip
 sudo apt-get update
 sudo mkdir /usr/bin/burr; sudo chmod 777 /usr/bin/burr ; sudo cd  /usr/bin/burr ; sudo git -C /usr/bin/ clone https://gitlab.com/awesome-dev/burr.git 
 python3  ./.install l
