@@ -1,6 +1,8 @@
 # Burr
 #### Productivity tool designed for software developers. 
 
+Well, using 3 different commands to push a simple fix in your code is insane!
+
 
 
 ### How to install?
